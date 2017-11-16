@@ -10,7 +10,7 @@ class TweetBox extends Component {
 
   handleChange(text) {
     this.setState({
-      text: text,
+      text,
       charsRemaining: 140 - text.length
     });
   }
@@ -23,11 +23,11 @@ class TweetBox extends Component {
           placeholder={this.props.prompt}
           onChange={e => this.handleChange(e.target.value)}
         />
-        <p>
-          {this.state.charsRemaining}
-        </p>
-        <button onClick={() => this.props.handleTweet(this.state.text)}
-        disabled={this.state.charsRemaining < 0} >
+        <p>{this.state.charsRemaining}</p>
+        <button
+          onClick={() => this.props.handleTweet(this.state.text)}
+          disabled={this.state.charsRemaining < 0}
+        >
           Tweet
         </button>
       </div>
