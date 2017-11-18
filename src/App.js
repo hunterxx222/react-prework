@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import TweetBox from './TweetBox';
 import Tweet from "./Tweet";
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -12,20 +13,30 @@ export default class App extends Component {
           text: 'Hello',
           liked: true,
           charsRemaining: 140,
+          time: Math.round(Date.now()/1000)
         },
         {
           text: 'World',
           liked: false,
           charsRemaining: 140,
+          time: Math.round(Date.now()/1000)-20
         },
       ],
     };
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => this.tick(), 1000);
+  }
+  tick() {
+    this.setState({ });  
   }
 
   handleTweet(tweetText) {
     const tweetObj = {
       text: tweetText,
       liked: false,
+      time: Math.round(Date.now()/1000)
     };
     this.setState({
       tweets: this.state.tweets.concat(tweetObj),
@@ -49,6 +60,13 @@ export default class App extends Component {
   }
 
   deleteTweet(tweet) {
+    let tweets = this.state.tweets
+    this.state.tweets.map(t => {
+      if (t.text == tweet.text) {
+        tweets.splice(tweets.indexOf(t),1);
+      }
+    });
+      this.setState({ tweets });
   }
 
   render() {
@@ -56,10 +74,10 @@ export default class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Coderschool Prework</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to .
+          This is a mini-twitter app that doesn't push anything to the cloud!
         </p>
         <div>
           <TweetBox
